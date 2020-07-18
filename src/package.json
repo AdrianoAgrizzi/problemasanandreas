@@ -1,0 +1,13 @@
+{
+  "name": "problemasanandreas",
+  "version": "1.0.0",
+  "description": "Desenvolvimento de seleção da TAKE Problema: Correios de San Andreas",
+  "author": "Adriano Agrizzi",
+  "scripts": {
+    "production" : "node server.js",
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
