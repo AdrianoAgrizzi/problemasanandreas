@@ -4,13 +4,13 @@ fs = require('fs');
 module.exports = function(server) {
     
     server.get('/api/carregatrechos', (req, res) => {
-        Servicos.carregaTrechos(req.query, (ret) => {
+        Servicos.carregaTrechos("", (ret) => {
             res.send(String(ret));
         });
     })    
 
     server.get('/api/carregaencomendas', (req, res) => {
-        Servicos.carregaEncomendas(req.query, (ret) => {
+        Servicos.carregaEncomendas("", (ret) => {
             res.send(String(ret));            
         });
     })    

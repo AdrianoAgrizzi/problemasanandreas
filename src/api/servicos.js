@@ -15,41 +15,51 @@ var arrayRotas = [];
 // Lê o arquivo de trechos
 Servicos.carregaTrechos = (dados, retorno) => {
   
+  if (dados != null && dados.trim() != ""){
+    Servicos.trechos = "src/data/"+dados.trim();
+  }
+
   // Verifica se o arquivo foi informado ou usa o padrão
   if ( Servicos.trechos == "" || Servicos.trechos == null ){
     Servicos.trechos = "src/data/trechos.txt";
   }
 
+  arrayTrechos1 = [];
+  arrayTrechos2 = [];
+  arrayTrechosDistancia = [];
+
   // Verifica se o arquivo existe
   fs.stat(Servicos.trechos, (err, stats) => {
     if (err) throw err;
 
-    // Carrega o arquivo na array
+    // Carrega o arquivo na array    
     fs.readFile(Servicos.trechos, (err, data) => {
       if (err) throw err;
 
       let arrayTrechos = data.toString().split("\n"); 
-      arrayTrechos1 = [];
-      arrayTrechos2 = [];
-      arrayTrechosDistancia = [];
       for ( i in arrayTrechos ){
         arrayTrechos1.push(String(arrayTrechos[i].split(' ')[0]).trim());
         arrayTrechos2.push(String(arrayTrechos[i].split(' ')[1]).trim());
         arrayTrechosDistancia.push(Number(String(arrayTrechos[i].split(' ')[2]).trim()));
       }
       retorno(data);
-    });  
+    });     
   });
 };
 
 // Lê o arquivo de encomendas
 Servicos.carregaEncomendas = (dados, retorno) => {
 
+  if (dados != null && dados.trim() != ""){
+    Servicos.encomendas = "src/data/"+dados.trim();
+  }
+
   // Verifica se o arquivo foi informado ou usa o padrão
   if ( Servicos.encomendas == "" || Servicos.encomendas == null ){
     Servicos.encomendas = "src/data/encomendas.txt";
   }
 
+  arrayEncomendas = [];
   // Verifica se o arquivo existe
   fs.stat(Servicos.encomendas, (err, stats) => {
     if (err) throw err;
@@ -68,7 +78,7 @@ Servicos.carregaEncomendas = (dados, retorno) => {
 Servicos.verificaDados = (retorno) => {
 
   if (arrayTrechos1 == null || arrayTrechos1.length == 0) {
-    Servicos.carregaTrechos("", () => {
+    Servicos.carregaTrechos("trechos.txt", () => {
       if (arrayEncomendas == null || arrayEncomendas.length == 0) {
         Servicos.carregaEncomendas("", () => {
           retorno();
@@ -95,6 +105,11 @@ Servicos.calculaRotas = (retorno) => {
 
   arrayRotas = [];
 
+  if ( arrayTrechos1.length < 1 || arrayEncomendas.length < 1){
+    retorno("");
+    return
+  }
+
   // Looping das encomendas
   for (e in arrayEncomendas){
     origem = String(arrayEncomendas[e].split(' ')[0]).trim();
@@ -110,7 +125,7 @@ Servicos.calculaRotas = (retorno) => {
     rota = "";
     achouRota = false;
     dias = 0, t = 0, distanciaMenor = 99, indiceMenor = -1;
-    // Looping das rotas
+    // Looping das rotas/trechos
     while (true) {
       // Localiza o proximo destino da encomenda no trecho
       // A busca é realizada de trás para frente, do destino para a origem
@@ -190,7 +205,7 @@ Servicos.calculaRotas = (retorno) => {
       arrayRotas.push(origem + " " + rota + dias);
     }
     else{
-      arrayRotas.push("Destino inalcançável!");
+      arrayRotas.push("Destino inalcançável");
     }
   }
 
@@ -203,7 +218,11 @@ Servicos.calculaRotas = (retorno) => {
   dados = dados.replace(/,/g,"\n");
   fs.writeFile(Servicos.rotas, dados,()=>{});
 
-  retorno(arrayRotas.toString());
+  try
+  {
+    retorno(arrayRotas.toString());
+  }
+  catch{}
 }
 
 module.exports = Servicos; 
