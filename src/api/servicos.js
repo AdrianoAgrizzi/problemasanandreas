@@ -29,6 +29,9 @@ Servicos.carregaTrechos = (dados, retorno) => {
       if (err) throw err;
 
       let arrayTrechos = data.toString().split("\n"); 
+      arrayTrechos1 = [];
+      arrayTrechos2 = [];
+      arrayTrechosDistancia = [];
       for ( i in arrayTrechos ){
         arrayTrechos1.push(String(arrayTrechos[i].split(' ')[0]).trim());
         arrayTrechos2.push(String(arrayTrechos[i].split(' ')[1]).trim());
@@ -64,28 +67,36 @@ Servicos.carregaEncomendas = (dados, retorno) => {
 // Calcula o caminho e o tempo de entrega das encomendas
 Servicos.verificaDados = (retorno) => {
 
-  if (arrayTrechos1 == null || arrayTrechos1.length == 0){
-   Servicos.carregaTrechos("", () => {});
-  }  
-  if (arrayEncomendas == null || arrayEncomendas.length == 0){
-    Servicos.carregaEncomendas("", () => {      
-      retorno();
+  if (arrayTrechos1 == null || arrayTrechos1.length == 0) {
+    Servicos.carregaTrechos("", () => {
+      if (arrayEncomendas == null || arrayEncomendas.length == 0) {
+        Servicos.carregaEncomendas("", () => {
+          retorno();
+        });
+      }
+      else {
+        retorno();
+      }
     });
   }
-  else{
+  else {
     retorno();
   }
-
+  
 }; 
 
 Servicos.calculaRotas = (retorno) => {
 
-  let arrayTrechos2Loop;
+  let arrayTrechos1Loop, arrayTrechos2Loop;
   let origem, proximo, destino;
   let dias, distancia, distanciaMenor, indiceMenor, indiceMenor2;
   let achouRota, rota;
   let t;
 
+  console.log(arrayTrechos1);
+  console.log(arrayTrechos2);
+  console.log(arrayEncomendas);
+  arrayRotas = [];
 
   // Looping das encomendas
   for (e in arrayEncomendas){
@@ -93,11 +104,14 @@ Servicos.calculaRotas = (retorno) => {
     proximo = String(arrayEncomendas[e].split(' ')[1]).trim();
     destino = proximo;
 
-    //console.log("ENCOMENDA:");
-    //console.log("["+origem + " " + destino+"]");
+    if (origem == "" || destino == "") continue;
+
+    console.log("ENCOMENDA:");
+    console.log("["+origem + " " + destino+"]");
 
     // Array auxiliar para controle das rotas
     arrayTrechos2Loop = arrayTrechos2.slice();
+    arrayTrechos1Loop = arrayTrechos1.slice();
 
     rota = "";
     achouRota = false;
@@ -107,11 +121,12 @@ Servicos.calculaRotas = (retorno) => {
       //var waitTill = new Date(new Date().getTime() + 50);
       //while(waitTill > new Date()){}
 
+      console.log("Rota: "+rota);
       // Localiza o proximo destino da encomenda no trecho
       // A busca é realizada de trás para frente, do destino para a origem
       t = arrayTrechos2Loop.findIndex(e => e == proximo);
       // Se encontrou o destino no trecho e sendo diferente do destino da encomenda, para evitar entrar em círculo
-      if (t > -1 && arrayTrechos1[t] != destino ){
+      if (t > -1 && arrayTrechos1Loop[t] != destino ){
         // Guarda a menor distância, duas últimas
         distancia = arrayTrechosDistancia[t];        
         if (distancia < distanciaMenor){
@@ -121,7 +136,7 @@ Servicos.calculaRotas = (retorno) => {
         }
 
         // Verifica se encontrou a rota
-        if (arrayTrechos1[t] == origem) {
+        if (arrayTrechos1Loop[t] == origem) {
           rota = arrayTrechos2[t] + " " + rota;
           dias += arrayTrechosDistancia[t];
           achouRota = true;
@@ -132,19 +147,30 @@ Servicos.calculaRotas = (retorno) => {
       }
       else {
         // Verifica e marca o trecho para evitar uma rota circular
-        if (arrayTrechos1[t] == destino){
+        if (arrayTrechos1Loop[t] == destino){
           arrayTrechos2Loop[t] = arrayTrechos2Loop[t]+"x";
-          proximo = arrayTrechos1[indiceMenor2];
+
+          // Verifica se o destino é impossível de ser alcançado
+          if (arrayTrechos2Loop[t].indexOf("xx") > -1){
+            break;            
+          }
+
+          proximo = arrayTrechos1Loop[indiceMenor2];          
           continue;
         }
 
         // Verifica se entrou numa rota circular e marca trecho
         if (rota.indexOf(arrayTrechos2[indiceMenor]) > -1){
-          arrayTrechos1[indiceMenor] = arrayTrechos1[indiceMenor]+"x";
+          arrayTrechos1Loop[indiceMenor] = arrayTrechos1Loop[indiceMenor]+"x";
+
+          // Verifica se o destino é impossível de ser alcançado
+          if (arrayTrechos1Loop[indiceMenor].indexOf("xx") > -1){
+            break;            
+          }
           
           if (indiceMenor2 > -1){
             rota = rota.replace(arrayTrechos2[indiceMenor]+" ","");
-            proximo = arrayTrechos1[indiceMenor2];
+            proximo = arrayTrechos1Loop[indiceMenor2];
           }
           else{
             rota += "Destino inalcançável";
@@ -158,13 +184,13 @@ Servicos.calculaRotas = (retorno) => {
         distanciaMenor = 99;
         
         // Verifica se encontrou a rota
-        if (arrayTrechos1[indiceMenor] == origem) {
+        if (arrayTrechos1Loop[indiceMenor] == origem) {
           achouRota = true;
           break;
         }
 
         // Seleciona próximo trecho para buscar a rota
-        proximo = arrayTrechos1[indiceMenor];
+        proximo = arrayTrechos1Loop[indiceMenor];
         continue;
       }
     }    
@@ -174,7 +200,7 @@ Servicos.calculaRotas = (retorno) => {
       arrayRotas.push(origem + " " + rota + dias);
     }
     else{
-      arrayRotas.push("Não encontrou!");
+      arrayRotas.push("Destino inalcançável!");
     }
   }
 
@@ -189,7 +215,7 @@ Servicos.calculaRotas = (retorno) => {
   dados = dados.replace(/,/g,"\n");
   fs.writeFile(Servicos.rotas, dados,()=>{});
 
-  retorno(arrayRotas);
+  retorno(arrayRotas.toString());
 }
 
 module.exports = Servicos; 

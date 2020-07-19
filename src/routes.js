@@ -1,4 +1,5 @@
 const Servicos = require('./api/servicos');
+fs = require('fs');
 
 module.exports = function(server) {
     
@@ -20,8 +21,15 @@ module.exports = function(server) {
         console.log(req.query);        
         Servicos.verificaDados(()=>{
             Servicos.calculaRotas((ret)=>{
-                res.send(ret);
+                res.send(String(ret));
             });
+        });
+    })    
+
+    server.get('/', (req, res) => {
+        fs.readFile('src/index.html', (err, data) => {
+            let html = data.toString();
+            res.send(html);
         });
     })    
 

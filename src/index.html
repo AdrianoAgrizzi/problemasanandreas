@@ -1,0 +1,65 @@
+<html>
+<body>
+	<style>
+		#trechos, #encomendas, #rotas{
+			height: 200px;
+			border: 1px solid #ccc;
+			display: inline-table;
+			padding: 20px;
+		}
+		button{
+			border: 1px solid #ccc;
+			Height: 40px;
+		}
+	</style>
+	
+	<div align="center">
+	<div style="float:left; width: 200px">
+		<p><button onclick="carregaTrechos()" >Carregar Trechos</button></p>
+		<p id="trechos"></p>
+	</div>
+	<div style="float:left; width: 200px">
+		<p><button onclick="carregaEncomendas()" >Carregar Encomendas</button></p>
+		<p id="encomendas"></p>
+	</div>
+	<div style="float:left; width: 200px">
+		<p><button onclick="calculaRotas()">Calcular Rotas</button/p>
+		<p id="rotas"></p>
+	</div>
+	</div>
+	
+	<script>
+	function calculaRotas() {
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				document.getElementById("rotas").innerHTML = this.responseText.replace(/,/g,"<br>");
+			}
+		};
+		xhttp.open("GET", "/api/calcularotas", true);
+		xhttp.send();
+	}
+	function carregaTrechos() {
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				document.getElementById("trechos").innerText = this.responseText.replace(/,/g,"<br>");
+			}
+		};
+		xhttp.open("GET", "/api/carregatrechos", true);
+		xhttp.send();
+	}
+	function carregaEncomendas() {
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				document.getElementById("encomendas").innerText = this.responseText.replace(/,/g,"<br>");
+			}
+		};
+		xhttp.open("GET", "/api/carregaencomendas", true);
+		xhttp.send();
+	}
+
+	</script>
+</body>
+</html>
