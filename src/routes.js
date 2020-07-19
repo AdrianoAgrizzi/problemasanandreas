@@ -18,8 +18,10 @@ module.exports = function(server) {
 
     server.get('/api/calcularotas', (req, res) => {
         console.log(req.query);        
-        Servicos.calculaRotas(req.query, (ret) => {
-            res.send(String(ret));
+        Servicos.verificaDados(()=>{
+            Servicos.calculaRotas((ret)=>{
+                res.send(ret);
+            });
         });
     })    
 
