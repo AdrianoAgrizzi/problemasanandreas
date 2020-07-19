@@ -93,9 +93,6 @@ Servicos.calculaRotas = (retorno) => {
   let achouRota, rota;
   let t;
 
-  console.log(arrayTrechos1);
-  console.log(arrayTrechos2);
-  console.log(arrayEncomendas);
   arrayRotas = [];
 
   // Looping das encomendas
@@ -106,9 +103,6 @@ Servicos.calculaRotas = (retorno) => {
 
     if (origem == "" || destino == "") continue;
 
-    console.log("ENCOMENDA:");
-    console.log("["+origem + " " + destino+"]");
-
     // Array auxiliar para controle das rotas
     arrayTrechos2Loop = arrayTrechos2.slice();
     arrayTrechos1Loop = arrayTrechos1.slice();
@@ -118,10 +112,6 @@ Servicos.calculaRotas = (retorno) => {
     dias = 0, t = 0, distanciaMenor = 99, indiceMenor = -1;
     // Looping das rotas
     while (true) {
-      //var waitTill = new Date(new Date().getTime() + 50);
-      //while(waitTill > new Date()){}
-
-      console.log("Rota: "+rota);
       // Localiza o proximo destino da encomenda no trecho
       // A busca é realizada de trás para frente, do destino para a origem
       t = arrayTrechos2Loop.findIndex(e => e == proximo);
@@ -203,8 +193,6 @@ Servicos.calculaRotas = (retorno) => {
       arrayRotas.push("Destino inalcançável!");
     }
   }
-
-  console.log(arrayRotas);
 
   // Verifica se o arquivo foi informado ou usa o padrão
   if ( Servicos.rotas == "" || Servicos.rotas == null ){
