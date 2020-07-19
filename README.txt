@@ -13,17 +13,18 @@ Resumo da solução:
     Algorítimo:
         - Inicia com um loop das encomendas, pegando origem e destino.
 	- Dentro o loop para localizar os trechos.
-	- A busca do trechos é realizada de trás pra frente, ou seja, do destino a origem.
-	- Assim usando como exemplo a emcomenda LS BC, o destino BC é localizado no trecho de destino.
-	- Casos existe mais de um trecho o mesmo destino, todos serão verificados.
-        - Ao terminar esta pesquisa, o próximo destino procurado no trecho é a origem do trecho anterior, neste caso LS.
+	- A busca do trechos é realizada de trás pra frente, ou seja, do destino para origem.
+	- Assim usando como exemplo a emcomenda LS BC, o destino BC é localizado no arquivo de trecho na parte do destino.
+	- Caso exista mais de um trecho para o mesmo destino, todos serão verificados.
+        - Ao terminar a pesquisa, o próximo destino procurado no trecho é a origem do trecho anterior, neste caso LS.
 	- Assim, todos os possíveis trechos com este destino serão novamente procurados, repetindo o mesmo método de busca
 	- Até encontrar a orgiem da emcomenda e de forma que seja o menor tempo.
 	- Durante a busca são verificadas e controladas rotas circulares.
 	- Para este controle realizei marcações de trechos já verificados e condicionantes para analisar e conferir.
-	- Caso a rota de menor tempo não seja alcançavel, entre em círculo, ela será ignorada e o trecho em segundo será utilizado.
- 	- Portanto o algorítimo realiza o cálculo da menor rota, mas também veirifica se a menor rota gera um problema circular.
-	- E então seleciona a segunda menor rota.
+	- Caso a rota de menor tempo não seja alcançavel, e ela entre em um círculo, ela será ignorada e o trecho 
+	   em segundo será utilizado.
+ 	- Portanto o algorítimo realiza o cálculo da menor rota, mas também verifica se a menor rota gera um problema circular.
+	- Então é selecionada a segunda menor rota e o processo é repetido.
 	- As rotas são armazendas e no fim gravadas no arquivo rotas.txt (pasta src/data)
 	
 	
