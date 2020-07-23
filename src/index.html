@@ -1,5 +1,8 @@
 <html>
 <body>
+	<head>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	</head>
 	<style>
 		#trechos, #encomendas, #rotas{
 			height: 200px;
@@ -12,22 +15,27 @@
 			Height: 40px;
 		}
 	</style>
-	
-	<div align="center">
-	<div style="float:left; width: 200px">
-		<p><button onclick="carregaTrechos()" >Carregar Trechos</button></p>
-		<p id="trechos"></p>
+
+	<div class="container">
+		<div class="text-center p-2 badge-info">
+			<h4>Desenvolvimento de seleção da TAKE Problema<br>Correios de San Andreas</h4>
+		</div>
+		<div class="row text-center m-2 mt-3 badge-light p-2 pt-4">
+			<div class="col-md-4 col-sm-12" style="width: 200px">
+				<p><button class="btn btn-default" onclick="carregaTrechos()" >Carregar Trechos</button></p>
+				<p id="trechos"></p>
+			</div>
+			<div class="col-md-4 col-sm-12" style="width: 200px">
+				<p><button class="btn btn-default" onclick="carregaEncomendas()" >Carregar Encomendas</button></p>
+				<p id="encomendas"></p>
+			</div>
+			<div class="col-md-4 col-sm-12" style="width: 200px">
+				<p><button class="btn btn-default" onclick="calculaRotas()">Calcular Rotas</button/p>
+				<p id="rotas"></p>
+			</div>
+		</div>
 	</div>
-	<div style="float:left; width: 200px">
-		<p><button onclick="carregaEncomendas()" >Carregar Encomendas</button></p>
-		<p id="encomendas"></p>
-	</div>
-	<div style="float:left; width: 200px">
-		<p><button onclick="calculaRotas()">Calcular Rotas</button/p>
-		<p id="rotas"></p>
-	</div>
-	</div>
-	
+
 	<script>
 	function calculaRotas() {
 		var xhttp = new XMLHttpRequest();
@@ -61,5 +69,9 @@
 	}
 
 	</script>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>		
 </body>
 </html>

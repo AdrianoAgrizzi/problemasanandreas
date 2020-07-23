@@ -3,10 +3,10 @@
 
 ## Solução realizada.
 ### Criei o backend com microserviços usando chamada api:
-	-api/carregatrechos, carrega o arquivos dos trechos.
-	-api/carregaencomendas, carrega o arquivo das encomendas.
-	-api/calcularotas, realiza o carregamento dos arquivos e calcula a rota.
-	-/, página de interface 
+	http://localhost:3000, página de interface.
+	http://localhost:3000/api/carregatrechos, carrega o arquivos dos trechos.
+	http://localhost:3000/api/carregaencomendas, carrega o arquivo das encomendas.
+	http://localhost:3000/api/calcularotas, realiza o carregamento dos arquivos e calcula a rota.
 
 ## Resumo da solução:
 	- Os trechos são lidos do arquivo e carregados em arrays, cada coluna numa determinada array.
