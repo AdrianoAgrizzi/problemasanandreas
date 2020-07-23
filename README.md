@@ -1,17 +1,17 @@
 
 # Desenvolvimento de seleção Problema: Correios de San Andreas
 
-# Solução realizada.
-## Criei o backend com microserviços usando chamada api
--api/carregatrechos, carrega o arquivos dos trechos.
--api/carregaencomendas, carrega o arquivo das encomendas.
--api/calcularotas, realiza o carregamento dos arquivos e calcula a rota.
--/, página de interface 
+## Solução realizada.
+### Criei o backend com microserviços usando chamada api:
+	-api/carregatrechos, carrega o arquivos dos trechos.
+	-api/carregaencomendas, carrega o arquivo das encomendas.
+	-api/calcularotas, realiza o carregamento dos arquivos e calcula a rota.
+	-/, página de interface 
 
-# Resumo da solução:
+## Resumo da solução:
     - Os trechos são lidos do arquivo e carregados em arrays, cada coluna numa determinada array.
     - As encomendas tb são lidas do arquivo e carregadas numa array.
-    ## Algorítimo:
+    ### Algorítimo:
         - Inicia com um loop das encomendas, pegando origem e destino.
 	- Dentro o loop para localizar os trechos.
 	- A busca do trechos é realizada de trás pra frente, ou seja, do destino para origem.
