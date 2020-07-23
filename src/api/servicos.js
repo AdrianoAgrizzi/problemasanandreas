@@ -1,5 +1,3 @@
-const { SSL_OP_NO_SESSION_RESUMPTION_ON_RENEGOTIATION } = require('constants');
-
 fs = require('fs');
 
 const Servicos = function(servicos) {
