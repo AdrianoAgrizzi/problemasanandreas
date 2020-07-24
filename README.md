@@ -1,7 +1,13 @@
 
 # Desenvolvimento de seleção Problema: Correios de San Andreas
 
-## Solução realizada.
+## Como compilar e rodar a solução:
+	Desenvolvido em NODE.js, pacotes instalados pelo npm express e nodemon, versões mais recentes.
+	Executando pelo npm start, localhost:3000 (Tem uma interface para executar)
+	Testes de Unidade
+		Arquivo de teste na pasta test do projeto
+
+## Solução realizada:
 ### Criei o backend com microserviços usando chamada api:
 	http://localhost:3000, página de interface.
 	http://localhost:3000/api/carregatrechos, carrega o arquivos dos trechos.
